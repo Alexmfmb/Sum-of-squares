@@ -91,28 +91,38 @@ def Sum_of_five(num):
     return (False,0,0,0,0,0)
 
 def Sum_of_n(num,n):
+    if n ==1:
+            return [Is_Square(num)]
+    
     start = num
     while start != 0:
         a = next_smaller_square(start)
         if a == 0:  #if next smaller square of a is 0, then a is 1, therefore the loop ends
-            return [False] + n * [0]
+            return [False] + n * ["x"]
         
         b = num - a 
-        sum_of_n_minus_one = Sum_of_n(b,n - 1)
+            
+        if n == 2:
+            is_sum_n_minus_1 = [Is_Square(b),math.sqrt(b)]
+        elif n > 2:
+            is_sum_n_minus_1 = Sum_of_n(b,n - 1)
+        else:
+            print("how tf did you get here")
+            return [False] + n * ["y"]
 
-        if sum_of_n_minus_one[0]:
+        if is_sum_n_minus_1[0]:
             roota = math.sqrt(a)
-            stuff = [sum_of_n_minus_one[i] for i in range(1, n - 1 )]
+            stuff = [is_sum_n_minus_1[i] for i in range(1, n)]
             return [True,roota] + stuff
         else:
             start = a
-            
-    return [False] + n * [0]
 
-
+    return [False] + n * ["z"]
 
 if __name__ == '__main__':
-    inp = input("A positive Integer:")
+    
+    inp = 3
+    #inp = input("A positive Integer:")
     num = int(inp)
     two_data = Sum_of_two(num)
     three_data = Sum_of_three(num)
@@ -120,7 +130,9 @@ if __name__ == '__main__':
     five_data = Sum_of_five(num)
     print("{} can be expressed as a sum of two squares:{} \n a sum of three squares:{} \n a sum of four squares:{} \n a sum of five squares:{}".format(num,two_data,three_data,four_data,five_data))
 
-    
+    for i in range(10,50):
+        for j in range(1,5):
+            print("{} can be expressed as a sum of {} squares: {}".format(i,j, Sum_of_n(i,j)))
 
     
 
