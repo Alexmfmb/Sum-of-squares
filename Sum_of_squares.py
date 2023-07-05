@@ -92,7 +92,7 @@ def Sum_of_five(num):
 
 def Sum_of_n(num,n):
     if n ==1:
-            return [Is_Square(num)]
+            return [Is_Square(num),math.sqrt(num)]
     
     start = num
     while start != 0:
@@ -120,9 +120,7 @@ def Sum_of_n(num,n):
     return [False] + n * ["z"]
 
 if __name__ == '__main__':
-    
-    inp = 3
-    #inp = input("A positive Integer:")
+    inp = input("A positive Integer:")
     num = int(inp)
     two_data = Sum_of_two(num)
     three_data = Sum_of_three(num)
@@ -130,9 +128,10 @@ if __name__ == '__main__':
     five_data = Sum_of_five(num)
     print("{} can be expressed as a sum of two squares:{} \n a sum of three squares:{} \n a sum of four squares:{} \n a sum of five squares:{}".format(num,two_data,three_data,four_data,five_data))
 
-    for i in range(10,50):
-        for j in range(1,5):
-            print("{} can be expressed as a sum of {} squares: {}".format(i,j, Sum_of_n(i,j)))
+    for i in range(10500,10550):
+        for j in range(2,4):
+            if Sum_of_n(i,j)[0]:
+                print("{} can be expressed as a sum of {} squares: {}".format(i,j, Sum_of_n(i,j)))
 
     
 
