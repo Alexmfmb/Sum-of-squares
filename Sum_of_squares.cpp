@@ -64,7 +64,7 @@ std::vector<int> sum_of_n(int num, int n){
                 sum_n_minus_1 = {1, int(sqrt(b))};
             }
             else{
-                sum_n_minus_1 = {0, int(sqrt(b))};    
+                sum_n_minus_1 = {0, 0};    
             }
         }
         else if(n > 2){
@@ -90,6 +90,6 @@ std::vector<int> sum_of_n(int num, int n){
 
     }
 
-    ret.at(0) = 999;
+    ret.at(0) = 0;
     return ret;
 }
