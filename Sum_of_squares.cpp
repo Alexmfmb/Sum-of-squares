@@ -25,11 +25,11 @@ int next_smaller_square(int num){ //works
     }
     int a = 0;
     for(int i = 0; i < num; i++){
-        if(Is_square(i)){
-            a = i;
+        if(Is_square(num - 1 - i)){
+            return num - 1 - i;
         }
     }
-    return a;
+    return 0;
 }
 
 std::vector<int> sum_of_n(int num, int n){
