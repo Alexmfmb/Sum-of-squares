@@ -23,7 +23,6 @@ int next_smaller_square(int num){ //works
     if(num == 1){
         return 0;
     }
-    int a = 0;
     for(int i = 0; i < num; i++){
         if(Is_square(num - 1 - i)){
             return num - 1 - i;
