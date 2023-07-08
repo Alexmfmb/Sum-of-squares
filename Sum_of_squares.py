@@ -14,12 +14,10 @@ def Is_Square(num):
 def next_smaller_square(num):
     if num == 1 : return 0
 
-    a = 0
-    for i in range(num):
-        if Is_Square(i):
-            a = i
-
-    return a
+    for i in range(num - 1):
+        if Is_Square(num - 1 - i):
+            return num - 1 - i
+    return 0
 
 def Sum_of_two(num):
     start = num
@@ -120,17 +118,18 @@ def Sum_of_n(num,n):
     return [False] + n * ["z"]
 
 if __name__ == '__main__':
-    inp = input("A positive Integer:")
+    inp = 1
+    #inp = input("A positive Integer:")
     num = int(inp)
     two_data = Sum_of_two(num)
     three_data = Sum_of_three(num)
     four_data = Sum_of_four(num)
     five_data = Sum_of_five(num)
-    print("{} can be expressed as a sum of two squares:{} \n a sum of three squares:{} \n a sum of four squares:{} \n a sum of five squares:{}".format(num,two_data,three_data,four_data,five_data))
+    #print("{} can be expressed as a sum of two squares:{} \n a sum of three squares:{} \n a sum of four squares:{} \n a sum of five squares:{}".format(num,two_data,three_data,four_data,five_data))
 
-    for i in range(10500,10550):
+    for i in range(4000,5000):
         for j in range(2,4):
-            if Sum_of_n(i,j)[0]:
+            if not Sum_of_n(i,j)[0]:
                 print("{} can be expressed as a sum of {} squares: {}".format(i,j, Sum_of_n(i,j)))
 
     
