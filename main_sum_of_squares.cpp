@@ -3,12 +3,22 @@
 #include <vector>
 
 int main(){
-    for (int i = 0; i < 100; i++){
-        for(int j = 1; j < 3; j++){
-            for(int k = 0; k < j; k++){
-                std::cout << sum_of_n(i,j).at(k);
+    /*for (int i = 0; i < 100; i++){
+        std::cout << i << ":" << sum_of_n(i,2)[0] << sum_of_n(i,2)[1] << sum_of_n(i,2)[2] << std::endl;
+    }
+    */
+
+    int upper_limit_num = 1000000;
+    int upper_limit_sum = 4;
+    for (int i = 1; i < upper_limit_num; i++){
+        for(int j = 1; j < upper_limit_sum; j++){
+            std::vector<int> calc = sum_of_n(i,j);
+            std::cout << i << "-->" << calc.at(0) << "||";
+            for(int k = 1; k < j+1; k++){
+                std::cout << calc.at(k) << ",";
             }
             std::cout << std::endl;
         }
     }
+    
 }

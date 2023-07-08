@@ -2,7 +2,7 @@
 #include <cmath>
 #include <vector>
 
-bool Is_square(int num){
+bool Is_square(int num){ //works
     if(num == 0){
         return false;
     }
@@ -19,7 +19,7 @@ bool Is_square(int num){
     }
 }
 
-int next_smaller_square(int num){
+int next_smaller_square(int num){ //works
     if(num == 1){
         return 0;
     }
@@ -33,8 +33,10 @@ int next_smaller_square(int num){
 }
 
 std::vector<int> sum_of_n(int num, int n){
-    if(n == 1){
-        std::vector<int> ret = {0,0};
+    //should return vector of size n+1
+
+    if(n == 1){ //basically checks is square and returns vector with true/false and root
+        std::vector<int> ret = {0,0}; 
         if(Is_square(num) == true){
             ret.at(0) = 1;
         }
@@ -43,14 +45,14 @@ std::vector<int> sum_of_n(int num, int n){
         return ret;
     }
 
-    std::vector<int> ret = {0};
+    std::vector<int> ret(n+1); //return vector is of size n+1
     int start = num;
+
     while(start != 0){
         int a = next_smaller_square(start);
 
         if(a == 0){
-            std::vector<int> ret(n + 1);
-            ret.at(0) = 0;
+            ret.at(0) = 0; //return false
             return ret;
         }
 
@@ -58,7 +60,7 @@ std::vector<int> sum_of_n(int num, int n){
 
         std::vector<int> sum_n_minus_1(n);
 
-        if(n == 2){
+        if(n == 2){ //checks if square
             if(Is_square(b)){
                 sum_n_minus_1 = {1, int(sqrt(b))};
             }
@@ -70,15 +72,17 @@ std::vector<int> sum_of_n(int num, int n){
             sum_n_minus_1 = sum_of_n(b, n-1);
         }
 
-        ret = {sum_n_minus_1.at(0)};
+        ret.at(0) = sum_n_minus_1.at(0); //if sum of n-1 is sum of squares, then this is sum of squares
 
         if(sum_n_minus_1.at(0) == 1){
             double droota = sqrt(a);
             int roota = int(droota);
 
-            ret.push_back(roota);
+            ret.at(1) = roota;
 
-            ret.insert(ret.end(),sum_n_minus_1.begin() + 1,sum_n_minus_1.end());
+            for(int i = 0; i < n - 1; i++){ //constructing return vector
+                ret.at(i + 2) = sum_n_minus_1.at(i+1);
+            }
             return ret;
         }
         else{
