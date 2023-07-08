@@ -131,6 +131,3 @@ if __name__ == '__main__':
         for j in range(2,4):
             if not Sum_of_n(i,j)[0]:
                 print("{} can be expressed as a sum of {} squares: {}".format(i,j, Sum_of_n(i,j)))
-
-    
-
