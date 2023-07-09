@@ -119,15 +119,29 @@ def Sum_of_n(num,n):
 
 if __name__ == '__main__':
     inp = 1
-    #inp = input("A positive Integer:")
-    num = int(inp)
-    two_data = Sum_of_two(num)
-    three_data = Sum_of_three(num)
-    four_data = Sum_of_four(num)
-    five_data = Sum_of_five(num)
-    #print("{} can be expressed as a sum of two squares:{} \n a sum of three squares:{} \n a sum of four squares:{} \n a sum of five squares:{}".format(num,two_data,three_data,four_data,five_data))
+    inp = input("A positive Integer:")
+    inp2 = input("A number of summands:")
 
-    for i in range(4000,5000):
-        for j in range(2,4):
-            if not Sum_of_n(i,j)[0]:
-                print("{} can be expressed as a sum of {} squares: {}".format(i,j, Sum_of_n(i,j)))
+    intinp = int(inp)
+    intinp2 = int(inp2)
+    
+    print("{} can be expressed as a sum of {} squares: {}".format(inp,inp2,Sum_of_n(intinp,intinp2)))
+
+    print("------------------------------------------------")
+    
+    #setting limits for range ouput
+    num_lower = 4000
+    num_upper = 5000
+
+    sum_lower = 2
+    sum_upper = 3 
+
+    trueorfalse = False #print Values for true or false
+
+    print("Checking values between {} and {} if they can be expressed as a sum {} to {} of squares.".format(num_lower,num_upper,sum_lower,sum_upper))
+    print("Printing output, where results are {}".format(trueorfalse))
+    for i in range(num_lower,num_upper + 1):
+        for j in range(sum_lower,sum_upper + 1):
+            result = Sum_of_n(i,j)
+            if result[0] == trueorfalse:
+                print("{} can be expressed as a sum of {} squares: {}".format(i,j, result))
