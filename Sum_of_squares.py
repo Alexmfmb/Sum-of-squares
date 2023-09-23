@@ -89,11 +89,13 @@ def Sum_of_five(num):
     return (False,0,0,0,0,0)
 
 def Sum_of_n(num,n):
+    #returns a list of length n+1 containing bool and summands
     if n ==1:
             return [Is_Square(num),math.sqrt(num)]
     
     start = num
-    while start != 0:
+    while start > num/n:  #stops calculation if point is reached where n*[value to check] = num || before: start != 0
+
         a = next_smaller_square(start)
         if a == 0:  #if next smaller square of a is 0, then a is 1, therefore the loop ends
             return [False] + n * ["x"]
@@ -117,6 +119,7 @@ def Sum_of_n(num,n):
 
     return [False] + n * ["z"]
 
+
 if __name__ == '__main__':
     inp = 1
     inp = input("A positive Integer:")
@@ -131,12 +134,12 @@ if __name__ == '__main__':
     
     #setting limits for range ouput
     num_lower = 4000
-    num_upper = 5000
+    num_upper = 500044
 
-    sum_lower = 2
-    sum_upper = 3 
+    sum_lower = 5
+    sum_upper = 6 
 
-    trueorfalse = False #print Values for true or false
+    trueorfalse = True #print Values for true or false
 
     print("Checking values between {} and {} if they can be expressed as a sum {} to {} of squares.".format(num_lower,num_upper,sum_lower,sum_upper))
     print("Printing output, where results are {}".format(trueorfalse))

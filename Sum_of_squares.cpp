@@ -47,7 +47,7 @@ std::vector<int> sum_of_n(int num, int n){
     std::vector<int> ret(n+1); //return vector is of size n+1
     int start = num;
 
-    while(start != 0){
+    while(start > num/n){
         int a = next_smaller_square(start);
 
         if(a == 0){
