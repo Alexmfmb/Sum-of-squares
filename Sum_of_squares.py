@@ -19,74 +19,6 @@ def next_smaller_square(num):
             return num - 1 - i
     return 0
 
-def Sum_of_two(num):
-    start = num
-    while start != 0:
-        a = next_smaller_square(start)
-        if a == 0: 
-            return(False,0,0)
-
-        b = num - a 
-
-        if Is_Square(b):
-            roota = math.sqrt(a)
-            rootb = math.sqrt(b)
-            return(True, roota, rootb)
-        else:
-            start = a
-
-    return (False, 0 , 0)
-
-def Sum_of_three(num):
-    start = num
-    while start != 0:
-        a = next_smaller_square(start)
-        if a == 0:
-            return (False,0,0,0)
-        
-        b = num - a 
-        testauf2 = Sum_of_two(b)
-
-        if testauf2[0]:
-            roota = math.sqrt(a)
-            return(True,roota,testauf2[1],testauf2[2])
-        else:
-            start = a
-    return (False,0,0,0)
-
-def Sum_of_four(num):
-    start = num
-    while start != 0:
-        a = next_smaller_square(start)
-        if a == 0: 
-            return (False,0,0,0,0)
-        
-        b = num - a 
-        testauf3 = Sum_of_three(b)
-
-        if testauf3[0]:
-            roota = math.sqrt(a)
-            return(True,roota,testauf3[1],testauf3[2],testauf3[3])
-        else:
-            start = a
-    return (False,0,0,0,0)
-
-def Sum_of_five(num):
-    start = num
-    while start != 0:
-        a = next_smaller_square(start)
-        if a == 0: 
-            return (False,0,0,0,0,0)
-        
-        b = num - a 
-        testauf4 = Sum_of_four(b)
-
-        if testauf4[0]:
-            roota = math.sqrt(a)
-            return(True,roota,testauf4[1],testauf4[2],testauf4[3],testauf4[4])
-        else:
-            start = a
-    return (False,0,0,0,0,0)
 
 def Sum_of_n(num,n):
     #returns a list of length n+1 containing bool and summands
@@ -147,6 +79,7 @@ def degeneracy(num,n):
         return [Is_Square(num),1,[math.sqrt(num)]]
 
     sum1 = Sum_of_n(num,n)
+    
     if sum1[0]:
         #start calculating degeneracy of first solution of sum_of_n
         start = sum1[1]
@@ -157,7 +90,7 @@ def degeneracy(num,n):
         #return array
         arr = []
 
-        while start**2 >= num/n :
+        while start**2 >= num/n : #For degeneracy where the order of the summands matters, set num/n -> 1
 
             #calculate difference of num and start^2
             b = num - (start **2)
@@ -185,7 +118,7 @@ def degeneracy(num,n):
 
 if __name__ == '__main__':
     n = 3
-    for num in range(200,300):
+    for num in range(1,100):
         deg = degeneracy(num,n)
         sumo = Sum_of_n(num,n)
 
@@ -214,7 +147,7 @@ if __name__ == '__main__':
 
        
 
-    '''
+
     inp = 1
     inp = input("A positive Integer:")
     inp2 = input("A number of summands:")
@@ -242,4 +175,3 @@ if __name__ == '__main__':
             result = Sum_of_n(i,j)
             if result[0] == trueorfalse:
                 print("{} can be expressed as a sum of {} squares: {}".format(i,j, result)) 
-    '''
