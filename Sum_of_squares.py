@@ -14,7 +14,7 @@ def Is_Square(num):
 def next_smaller_square(num):
     if num == 1 : return 0
 
-    for i in range(num - 1):
+    for i in range(int(num) - 1):
         if Is_Square(num - 1 - i):
             return num - 1 - i
     return 0
@@ -90,37 +90,99 @@ def Sum_of_five(num):
 
 def Sum_of_n(num,n):
     #returns a list of length n+1 containing bool and summands
-    if n ==1:
+
+    #if n == 1 the problem reduces to if n is a square
+    if n == 1:
             return [Is_Square(num),math.sqrt(num)]
     
     start = num
     while start > num/n:  #stops calculation if point is reached where n*[value to check] = num || before: start != 0
 
+        #find the next smaller square number of start
         a = next_smaller_square(start)
-        if a == 0:  #if next smaller square of a is 0, then a is 1, therefore the loop ends
+
+        #if next smaller square of a is 0, then a is 1, therefore the loop ends
+        if a == 0:  
             return [False] + n * ["x"]
         
+        #calculate the remaining sum to check
         b = num - a 
-            
+        
+        #if n=2 and we found one next smaller square of n, the problem reduces to if n-a is asquare number
         if n == 2:
             is_sum_n_minus_1 = [Is_Square(b),math.sqrt(b)]
+        #The problem reduces to "Is the remaining number b a sum of n-1 squares"
         elif n > 2:
             is_sum_n_minus_1 = Sum_of_n(b,n - 1)
-        else:
+        else: #this case should never be accessed
             print("how tf did you get here")
             return [False] + n * ["y"]
 
+        #checking if is-b-a-sum-of-squares was successful
         if is_sum_n_minus_1[0]:
+            #a is a square so it has a root
             roota = math.sqrt(a)
+            #extract the roots out of the output of the check if b is a sum of squares
             stuff = [is_sum_n_minus_1[i] for i in range(1, n)]
-            return [True,roota] + stuff
+
+            #puzzling together the output, this is the end of a successful check if num is a sum of n squares
+            return [True,roota] + stuff 
         else:
+            #the b is not a sum of n-1 squares, so we go to the second next smaller square of num and check if the 
+            #difference is a sum of n-1. Then we check the third next smaller square, then the fourth, ...
+            #until the next-smaller-square (=nss) times n is smaller than num. In this case there has to be a bigger square than 
+            #the nss to fill the difference between num and the nss. This bigger square must have been checked before.
+            # --> The loop ends
             start = a
 
+    #This is hit if the Check for a next smaller square is unsuccessful
     return [False] + n * ["z"]
 
 
+#finding gegeneracy
+def degeneracy(num,n):
+    #returns array containing sum_of_n and degeneracy
+
+
+    sum1 = Sum_of_n(num,n)
+    if sum1[0]:
+        #start calculating degeneracy of first solution of sum_of_n
+        start = sum1[1]
+
+        #counter of degeneracy
+        deg_num_n = 0
+
+        #return array
+        arr = []
+
+        while start**2 > num/n :
+
+            #calculate difference of num and start^2
+            b = num - (start **2)
+
+            #is difference between num and start^2 a sum of n-1
+            sum2 = Sum_of_n(b, n-1)
+
+            if(sum2[0]):
+                #if is sum, the degeneracy increases by 1
+                deg_num_n += 1
+
+                #extract numbers from sum2
+                arr += [[start] + [sum2[i] for i in range(1,n)]]
+            start = start - 1
+
+
+        return [sum1[0],deg_num_n] + arr
+    else:
+        deg_num_n = 0
+        return [sum1[0],deg_num_n] + deg_num_n * [['z']]
+    
+
+
 if __name__ == '__main__':
+    print(degeneracy(55,4))
+
+    '''
     inp = 1
     inp = input("A positive Integer:")
     inp2 = input("A number of summands:")
@@ -134,17 +196,18 @@ if __name__ == '__main__':
     
     #setting limits for range ouput
     num_lower = 4000
-    num_upper = 500044
+    num_upper = 4100
 
-    sum_lower = 5
-    sum_upper = 6 
+    sum_lower = 3
+    sum_upper = 3
 
-    trueorfalse = True #print Values for true or false
+    trueorfalse = False #print Values for true or false
 
-    print("Checking values between {} and {} if they can be expressed as a sum {} to {} of squares.".format(num_lower,num_upper,sum_lower,sum_upper))
+    print("Checking values between {} and {} if they can be expressed as a sum of {} to {} of squares.".format(num_lower,num_upper,sum_lower,sum_upper))
     print("Printing output, where results are {}".format(trueorfalse))
     for i in range(num_lower,num_upper + 1):
         for j in range(sum_lower,sum_upper + 1):
             result = Sum_of_n(i,j)
             if result[0] == trueorfalse:
-                print("{} can be expressed as a sum of {} squares: {}".format(i,j, result))
+                print("{} can be expressed as a sum of {} squares: {}".format(i,j, result)) 
+    '''
