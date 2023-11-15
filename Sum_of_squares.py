@@ -143,6 +143,8 @@ def Sum_of_n(num,n):
 def degeneracy(num,n):
     #returns array containing sum_of_n and degeneracy
 
+    if n == 1:
+        return [Is_Square(num),1,[math.sqrt(num)]]
 
     sum1 = Sum_of_n(num,n)
     if sum1[0]:
@@ -155,20 +157,22 @@ def degeneracy(num,n):
         #return array
         arr = []
 
-        while start**2 > num/n :
+        while start**2 >= num/n :
 
             #calculate difference of num and start^2
             b = num - (start **2)
 
-            #is difference between num and start^2 a sum of n-1
-            sum2 = Sum_of_n(b, n-1)
+            #calculate degeneracy of (b = sum of n-1 squares)
+            deg_2nd_degree = degeneracy(b,n-1)
 
-            if(sum2[0]):
-                #if is sum, the degeneracy increases by 1
-                deg_num_n += 1
+            if(deg_2nd_degree[0]): #if there is at least one solution
+                #the degeneracy increases by the degeneracy of (b = n-1 squares)
+                deg_num_n += deg_2nd_degree[1]
 
-                #extract numbers from sum2
-                arr += [[start] + [sum2[i] for i in range(1,n)]]
+                #extract solutions from deg_2nd_degree
+                for i in range(2,deg_2nd_degree[1] + 2):
+                    arr += [[start] + [deg_2nd_degree[i][j] for j in range(n-1)]]
+
             start = start - 1
 
 
@@ -180,7 +184,18 @@ def degeneracy(num,n):
 
 
 if __name__ == '__main__':
-    print(degeneracy(55,4))
+    n = 3
+    for num in range(200,300):
+        deg = degeneracy(num,n)
+        sumo = Sum_of_n(num,n)
+        
+        if deg[0] != sumo[0]:
+            raise(ValueError)
+        if deg[deg[1]+1] == 3: #just checking for Indexerrors
+            print(False)
+
+        print(num,' degen: ', deg)
+        #print('Sum of n ', sumo)
 
     '''
     inp = 1
