@@ -179,7 +179,7 @@ def degeneracy(num,n):
         return [sum1[0],deg_num_n] + arr
     else:
         deg_num_n = 0
-        return [sum1[0],deg_num_n] + deg_num_n * [['z']]
+        return [sum1[0],deg_num_n] + [n*['z']]
     
 
 
@@ -188,14 +188,31 @@ if __name__ == '__main__':
     for num in range(200,300):
         deg = degeneracy(num,n)
         sumo = Sum_of_n(num,n)
-        
-        if deg[0] != sumo[0]:
-            raise(ValueError)
-        if deg[deg[1]+1] == 3: #just checking for Indexerrors
-            print(False)
 
         print(num,' degen: ', deg)
         #print('Sum of n ', sumo)
+
+        if deg[0] != sumo[0]:
+            raise(ValueError)
+        if deg[deg[1]+1] == 3: #just checking for Indexerrors/ errors in length of returned array
+            print(False)
+        
+        if deg[0]:
+            check_1 = 0
+            for i in range(n):
+                check_1 += (deg[2][i])**2
+
+            for j in range(2,deg[1]-1):
+                check_2 = 0
+                for i in range(n):
+                    check_2 += (deg[j][i])**2
+
+                if check_2 != check_1: 
+                    print("XXX oh no! ",num,' degen: ', deg)
+                    print(deg[2],deg[j],check_1,check_2)
+
+
+       
 
     '''
     inp = 1
