@@ -95,16 +95,16 @@ def degeneracy(s:int,n:int):
         
         start = sum1[1] #start with first square of the solution of (s,n)
 
-        while start**2 >= s/n : #For degeneracy where the order of the summands matters, set s/n -> 1
+        while start**2 * n >= s : #For degeneracy where the order of the summands matters, set s/n -> 1
 
             #calculate difference of s and start^2
             b = s - (start **2)
 
-            #calculate degeneracy of (b = sum of n-1 squares)
+            #calculate degeneracy of (b = sum of n-1 squares) = (b, n-1)
             deg_2nd_degree = degeneracy(b,n-1)
 
-            if(deg_2nd_degree[0]): #if there is at least one solution
-                #the degeneracy increases by the degeneracy of (b = n-1 squares)
+            if(deg_2nd_degree[0] and (max(deg_2nd_degree[2]) <= start)): #if there is at least one solution
+                #the degeneracy increases by the degeneracy of (b, n-1)
                 deg_s_n += deg_2nd_degree[1]
 
                 #extract solutions from deg_2nd_degree
@@ -121,8 +121,8 @@ def degeneracy(s:int,n:int):
 
 
 if __name__ == '__main__':
-    n = 3
-    for s in range(26,27):
+    n = 4
+    for s in range(50,150):
         deg = degeneracy(s,n)
         sumo = Sum_of_n(s,n)
 
