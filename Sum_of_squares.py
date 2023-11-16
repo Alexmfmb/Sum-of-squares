@@ -20,15 +20,15 @@ def next_smaller_square(num):
     return 0
 
 
-def Sum_of_n(num,n):
+def Sum_of_n(s:int,n:int):
     #returns a list of length n+1 containing bool and summands
 
     #if n == 1 the problem reduces to if n is a square
     if n == 1:
-            return [Is_Square(num),math.sqrt(num)]
+            return [Is_Square(s),math.sqrt(s)]
     
-    start = num
-    while start > num/n:  #stops calculation if point is reached where n*[value to check] = num || before: start != 0
+    start = s
+    while start > s/n:  #stops calculation if point is reached where n*[value to check] = s || before: start != 0
 
         #find the next smaller square number of start
         a = next_smaller_square(start)
@@ -38,7 +38,7 @@ def Sum_of_n(num,n):
             return [False] + n * ["x"]
         
         #calculate the remaining sum to check
-        b = num - a 
+        b = s - a 
         
         #if n=2 and we found one next smaller square of n, the problem reduces to if n-a is asquare number
         if n == 2:
@@ -72,36 +72,40 @@ def Sum_of_n(num,n):
 
 
 #finding degeneracy
-def degeneracy(num,n):
+def degeneracy(s:int,n:int):
     #returns array containing sum_of_n and degeneracy
 
     if n == 1:
-        #xxxxxxxxx
-        return [Is_Square(num),1,[math.sqrt(num)]]
+        sq = Is_Square(s)
+        if(sq):
+            return [Is_Square(s),1,[math.sqrt(s)]]
+        else:
+            return [False,0,['z']]
+        
 
-    sum1 = Sum_of_n(num,n)
+    sum1 = Sum_of_n(s,n)
     
-    if sum1[0]:
-        #start calculating degeneracy of first solution of sum_of_n
-        start = sum1[1]
+    if sum1[0]: #if there is at least one solution:
 
         #counter of degeneracy
-        deg_num_n = 0
+        deg_s_n = 0
 
         #return array
         arr = []
+        
+        start = sum1[1] #start with first square of the solution of (s,n)
 
-        while start**2 >= 1 : #For degeneracy where the order of the summands matters, set num/n -> 1
+        while start**2 >= s/n : #For degeneracy where the order of the summands matters, set s/n -> 1
 
-            #calculate difference of num and start^2
-            b = num - (start **2)
+            #calculate difference of s and start^2
+            b = s - (start **2)
 
             #calculate degeneracy of (b = sum of n-1 squares)
             deg_2nd_degree = degeneracy(b,n-1)
 
             if(deg_2nd_degree[0]): #if there is at least one solution
                 #the degeneracy increases by the degeneracy of (b = n-1 squares)
-                deg_num_n += deg_2nd_degree[1]
+                deg_s_n += deg_2nd_degree[1]
 
                 #extract solutions from deg_2nd_degree
                 for i in range(2,deg_2nd_degree[1] + 2):
@@ -110,20 +114,19 @@ def degeneracy(num,n):
             start = start - 1
 
 
-        return [sum1[0],deg_num_n] + arr
+        return [sum1[0],deg_s_n] + arr
     else:
-        deg_num_n = 0
-        return [sum1[0],deg_num_n] + [n*['z']]
-    
+        deg_s_n = 0
+        return [sum1[0],deg_s_n] + [n*['z']]
 
 
 if __name__ == '__main__':
     n = 3
-    for num in range(1,100):
-        deg = degeneracy(num,n)
-        sumo = Sum_of_n(num,n)
+    for s in range(26,27):
+        deg = degeneracy(s,n)
+        sumo = Sum_of_n(s,n)
 
-        print(num,' degen: ', deg)
+        print(s,' degen: ', deg)
         #print('Sum of n ', sumo)
 
         if deg[0] != sumo[0]: #comparing bool values of sum of n and degeneracy
@@ -136,7 +139,7 @@ if __name__ == '__main__':
             for i in range(n):
                 check_1 += (deg[2][i])**2
             
-            if check_1 != num: 
+            if check_1 != s: 
                 raise(ValueError)
 
             for j in range(2,deg[1]-1):
