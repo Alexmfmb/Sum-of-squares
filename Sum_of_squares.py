@@ -126,15 +126,18 @@ if __name__ == '__main__':
         print(num,' degen: ', deg)
         #print('Sum of n ', sumo)
 
-        if deg[0] != sumo[0]:
+        if deg[0] != sumo[0]: #comparing bool values of sum of n and degeneracy
             raise(ValueError)
-        if deg[deg[1]+1] == 3: #just checking for Indexerrors/ errors in length of returned array
-            print(False)
+        if deg[deg[1]+1] == 3: #checking for Indexerrors/ errors in length of returned array
+            raise(IndexError)
         
-        if deg[0]:
+        if deg[0]: #comparing all degenerated results if they are the same
             check_1 = 0
             for i in range(n):
                 check_1 += (deg[2][i])**2
+            
+            if check_1 != num: 
+                raise(ValueError)
 
             for j in range(2,deg[1]-1):
                 check_2 = 0
@@ -142,13 +145,9 @@ if __name__ == '__main__':
                     check_2 += (deg[j][i])**2
 
                 if check_2 != check_1: 
-                    print("XXX oh no! ",num,' degen: ', deg)
-                    print(deg[2],deg[j],check_1,check_2)
+                    raise(ValueError)
 
-
-       
-
-
+    '''
     inp = 1
     inp = input("A positive Integer:")
     inp2 = input("A number of summands:")
@@ -176,3 +175,4 @@ if __name__ == '__main__':
             result = Sum_of_n(i,j)
             if result[0] == trueorfalse:
                 print("{} can be expressed as a sum of {} squares: {}".format(i,j, result)) 
+    '''
