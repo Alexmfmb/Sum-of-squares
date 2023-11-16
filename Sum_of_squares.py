@@ -71,11 +71,12 @@ def Sum_of_n(num,n):
     return [False] + n * ["z"]
 
 
-#finding gegeneracy
+#finding degeneracy
 def degeneracy(num,n):
     #returns array containing sum_of_n and degeneracy
 
     if n == 1:
+        #xxxxxxxxx
         return [Is_Square(num),1,[math.sqrt(num)]]
 
     sum1 = Sum_of_n(num,n)
@@ -90,7 +91,7 @@ def degeneracy(num,n):
         #return array
         arr = []
 
-        while start**2 >= num/n : #For degeneracy where the order of the summands matters, set num/n -> 1
+        while start**2 >= 1 : #For degeneracy where the order of the summands matters, set num/n -> 1
 
             #calculate difference of num and start^2
             b = num - (start **2)
