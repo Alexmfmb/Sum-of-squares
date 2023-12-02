@@ -11,7 +11,7 @@ In the following this problem will be referred to as (s,n)
 
 ## For the python version:
 1. download Sum_of_squares.py
-1. use 'from Sum_of_squares import [...]'
+1. use '''from Sum_of_squares import [...]'''
 [...] can be 'Sum_of_n', 'degeneracy' or 'degeneracy_long'
 
 These three functions are the most important functions. 
