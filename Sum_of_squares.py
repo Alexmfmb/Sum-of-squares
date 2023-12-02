@@ -27,8 +27,10 @@ def Sum_of_n(s:int,n:int):
     if n == 1:
             return [Is_Square(s),math.sqrt(s)]
     
+    #first start value is the value of the sum
     start = s
-    while start > s/n:  #stops calculation if point is reached where n*[value to check] = s || before: start != 0
+
+    while start * n > s:  #stops calculation if point is reached where n*[value to check] = s || before: start != 0
 
         #find the next smaller square number of start
         a = next_smaller_square(start)
@@ -95,15 +97,79 @@ def degeneracy(s:int,n:int):
         
         start = sum1[1] #start with first square of the solution of (s,n)
 
-        while start**2 * n >= s : #For degeneracy where the order of the summands matters, set s/n -> 1
+        while start**2 * n >= s : #For degeneracy where the order of the summands matters, set s -> n
 
             #calculate difference of s and start^2
             b = s - (start **2)
 
-            #calculate degeneracy of (b = sum of n-1 squares) = (b, n-1)
+            #calculate degeneracy of (b = sum of n-1 squares) := (b, n-1)
             deg_2nd_degree = degeneracy(b,n-1)
 
-            if(deg_2nd_degree[0] and (max(deg_2nd_degree[2]) <= start)): #if there is at least one solution
+            if(deg_2nd_degree[0]): 
+                #if there is at least one solution for second degree degeneracy
+                
+                if((max(deg_2nd_degree[2]) <= start)):
+                    #(max(deg_2nd_degree[2]) <= start)
+                    '''if the maximum number of the second degree degeneracy is larger than the start number, 
+                    this solution must have been checked before, because this algorithm checks solution with decreasing 
+                    value of the first number of the solution.
+                    for (233,3):
+                    [15,2,2] then [14,6,1] then [12,8,5] 
+                    so if we check [8,...] and find the solution [8,12,5] the max of this solution is larger than the start value which is ?
+                    '''
+
+                    #the degeneracy increases by the degeneracy of (b, n-1)
+                    deg_s_n += deg_2nd_degree[1]
+
+                    #extract solutions from deg_2nd_degree
+                    for i in range(2,deg_2nd_degree[1] + 2):
+                        arr += [[start] + [deg_2nd_degree[i][j] for j in range(n-1)]]
+
+            start = start - 1
+
+
+        return [sum1[0],deg_s_n] + arr
+    else:
+        deg_s_n = 0
+        return [sum1[0],deg_s_n] + [n*['z']]
+
+
+
+#finding degeneracy
+def degeneracy_long(s:int,n:int):
+    #returns array containing sum_of_n and degeneracy
+
+    if n == 1:
+        sq = Is_Square(s)
+        if(sq):
+            return [Is_Square(s),1,[math.sqrt(s)]]
+        else:
+            return [False,0,['z']]
+        
+
+    sum1 = Sum_of_n(s,n)
+    
+    if sum1[0]: #if there is at least one solution:
+
+        #counter of degeneracy
+        deg_s_n = 0
+
+        #return array
+        arr = []
+        
+        start = sum1[1] #start with first square of the solution of (s,n)
+
+        while start**2 >= 1 : #this makes the code check ALL permutations. Compare other degeneracs function
+
+            #calculate difference of s and start^2
+            b = s - (start **2)
+
+            #calculate degeneracy of (b = sum of n-1 squares) := (b, n-1)
+            deg_2nd_degree = degeneracy_long(b,n-1)
+
+            if(deg_2nd_degree[0]): 
+                #if there is at least one solution for second degree degeneracy
+
                 #the degeneracy increases by the degeneracy of (b, n-1)
                 deg_s_n += deg_2nd_degree[1]
 
@@ -120,13 +186,20 @@ def degeneracy(s:int,n:int):
         return [sum1[0],deg_s_n] + [n*['z']]
 
 
+
+
 if __name__ == '__main__':
-    n = 4
-    for s in range(50,150):
+
+    n = 3
+    s_min = 100
+    s_max = 200
+    for s in range(s_min,s_max):
         deg = degeneracy(s,n)
+        deg_l = degeneracy_long(s,n)
         sumo = Sum_of_n(s,n)
 
-        print(s,' degen: ', deg)
+        print(s,' degen_norm:\t', deg)
+        print(s,' degen_long:\t', deg_l)
         #print('Sum of n ', sumo)
 
         if deg[0] != sumo[0]: #comparing bool values of sum of n and degeneracy
@@ -149,33 +222,3 @@ if __name__ == '__main__':
 
                 if check_2 != check_1: 
                     raise(ValueError)
-
-    '''
-    inp = 1
-    inp = input("A positive Integer:")
-    inp2 = input("A number of summands:")
-
-    intinp = int(inp)
-    intinp2 = int(inp2)
-    
-    print("{} can be expressed as a sum of {} squares: {}".format(inp,inp2,Sum_of_n(intinp,intinp2)))
-
-    print("------------------------------------------------")
-    
-    #setting limits for range ouput
-    num_lower = 4000
-    num_upper = 4100
-
-    sum_lower = 3
-    sum_upper = 3
-
-    trueorfalse = False #print Values for true or false
-
-    print("Checking values between {} and {} if they can be expressed as a sum of {} to {} of squares.".format(num_lower,num_upper,sum_lower,sum_upper))
-    print("Printing output, where results are {}".format(trueorfalse))
-    for i in range(num_lower,num_upper + 1):
-        for j in range(sum_lower,sum_upper + 1):
-            result = Sum_of_n(i,j)
-            if result[0] == trueorfalse:
-                print("{} can be expressed as a sum of {} squares: {}".format(i,j, result)) 
-    '''
