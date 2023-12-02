@@ -1,5 +1,5 @@
 # Sum-of-squares
-This algorithm searches for solutions and the degeneracy of the solutions for the following problem: \n
+This algorithm searches for solutions and the degeneracy of the solutions for the following problem:
 Can a positive integer s be written as a sum of n square numbers
 $s = x_1^2 + x_2^2 + ... + x_n^2$
 where all $x_i$ are positive integers.
