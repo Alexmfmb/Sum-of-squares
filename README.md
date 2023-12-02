@@ -1,13 +1,18 @@
 # Sum-of-squares
 This algorithm searches for solutions and the degeneracy of the solutions for the following problem:
+
 Can a positive integer s be written as a sum of n square numbers
+
 $s = x_1^2 + x_2^2 + ... + x_n^2$
+
 where all $x_i$ are positive integers.
+
 In the following this problem will be referred to as (s,n)
 
 For the python version:
+
     1. download Sum_of_squares.py
-    2. use 'from Sum_of_squares import [...]'
+    1. use 'from Sum_of_squares import [...]'
     [...] can be 'Sum_of_n', 'degeneracy' or 'degeneracy_long'
 
     These three functions are the most important functions. 
