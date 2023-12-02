@@ -1,4 +1,5 @@
 # Sum-of-squares
+
 This algorithm searches for solutions and the degeneracy of the solutions for the following problem:
 
 Can a positive integer s be written as a sum of n square numbers
@@ -9,12 +10,14 @@ where all $x_i$ are positive integers.
 
 In the following this problem will be referred to as (s,n)
 
-## For the python version:
+## For the python version
+
 1. download Sum_of_squares.py
 1. use ```from Sum_of_squares import [...]```
 [...] can be `Sum_of_n`, `degeneracy` or `degeneracy_long`
 
-These three functions are the most important functions. 
+These three functions are the most important functions.
+
 - `Sum_of_n(s,n)` returns an array `[bool,x_1,x_2,x_3,...,x_n]`, where bool is `True` when there is a solution and `False` if there is none
 - `degeneracy(s,n)` returns an array `[bool,d,[x_1,x_2,x_3,...,x_n],[y_1,y_2,y_3,...,y_n],...]` where d is the degeneracy of the solution without counting permutations of one solution. `[y_1,y_2,y_3,...,y_n]` is another solution
 - `degeneracy_long(s,n)` returns an array `[bool,d,[x_1,x_2,x_3,...,x_n],[x_2,x_3,x_1,...,x_n],...,[y_1,y_2,y_3,...,y_n],...]`. This array contains also all permutations of one solution. d is the degeneracy where all permutations are counted.
